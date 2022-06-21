@@ -38,80 +38,49 @@ Try `curl http://127.0.0.1:5000/questions?page=2`
 ### GET Categories `/categories`
 End point to get a list of all categories.
 
-Returns all categories, total number of categories and a success value.
+Returns all categories as a dictionary with category id as key and string type as value, total number of categories and a success value.
+
+Takes no request arguments.
 
 Try `curl http://127.0.0.1:5000/categories`
 
 Reponse:
 ```
 {
-    "categories": [
-        {
-            "id": 1,
-            "type": "Science"
-        },
-        {
-            "id": 2,
-            "type": "Art"
-        },
-        {
-            "id": 3,
-            "type": "Geography"
-        },
-        {
-            "id": 4,
-            "type": "History"
-        },
-        {
-            "id": 5,
-            "type": "Entertainment"
-        },
-        {
-            "id": 6,
-            "type": "Sports"
-        }
-    ],
+    "categories": {
+        "1": "Science",
+        "2": "Art",
+        "3": "Geography",
+        "4": "History",
+        "5": "Entertainment",
+        "6": "Sports"
+    },
     "success": true,
-    "total_categories": 6
+    "totalCategories": 6
 }
 ```
 
-### GET Questions `/questions`
-End point to get all questions
+### GET Questions `/questions?page=${integer}`
+End point to get all questions in a given page.
 
-Returns all questions, total number of questions, all categories and a success value
+Takes a page request argument to get a specific page. `?page=${integer}`
 
-Try `curl http://127.0.0.1:5000/questions`
+Returns questions (10 questions for a page), total number of questions, all categories as a dictionary, the current category, and a success value
+
+Try `curl http://127.0.0.1:5000/questions?page=1`
 
 Response:
 ```
 {
-    "categories": [
-        {
-            "id": 1,
-            "type": "Science"
-        },
-        {
-            "id": 2,
-            "type": "Art"
-        },
-        {
-            "id": 3,
-            "type": "Geography"
-        },
-        {
-            "id": 4,
-            "type": "History"
-        },
-        {
-            "id": 5,
-            "type": "Entertainment"
-        },
-        {
-            "id": 6,
-            "type": "Sports"
-        }
-    ],
+    "categories": {
+        "1": "Science",
+        "2": "Art",
+        "3": "Geography",
+        "4": "History",
+        "5": "Entertainment",
+        "6": "Sports"
+    },
+    "currentCategory": "Entertainment",
     "questions": [
         {
             "answer": "Apollo 13",
@@ -185,261 +154,23 @@ Response:
         }
     ],
     "success": true,
-    "total_questions": 20
+    "totalQuestions": 21
 }
 ```
 
-### DELETE question `/questions/{question_id}`
-Endpoint to delete a question using the `question_id`.
+### GET questions `/categories/${category_id}/questions` -by category
+Endpoint to get questions by category using the category id.
 
-Returns the id of the deleted question, questions, total number of questions, and a success value.
+Takes in the id (integer) of the category as an argument.
 
-Try `curl http://127.0.0.1:5000/questions/25`
-
-Response:
-```
-{
-    "question_deleted": 23,
-    "questions": [
-        {
-            "answer": "Apollo 13",
-            "category": 5,
-            "difficulty": 4,
-            "id": 2,
-            "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-        },
-        {
-            "answer": "Tom Cruise",
-            "category": 5,
-            "difficulty": 4,
-            "id": 4,
-            "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-        },
-        {
-            "answer": "Maya Angelou",
-            "category": 4,
-            "difficulty": 2,
-            "id": 5,
-            "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
-        },
-        {
-            "answer": "Edward Scissorhands",
-            "category": 5,
-            "difficulty": 3,
-            "id": 6,
-            "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
-        },
-        {
-            "answer": "Muhammad Ali",
-            "category": 4,
-            "difficulty": 1,
-            "id": 9,
-            "question": "What boxer's original name is Cassius Clay?"
-        },
-        {
-            "answer": "Brazil",
-            "category": 6,
-            "difficulty": 3,
-            "id": 10,
-            "question": "Which is the only team to play in every soccer World Cup tournament?"
-        },
-        {
-            "answer": "Uruguay",
-            "category": 6,
-            "difficulty": 4,
-            "id": 11,
-            "question": "Which country won the first ever soccer World Cup in 1930?"
-        },
-        {
-            "answer": "George Washington Carver",
-            "category": 4,
-            "difficulty": 2,
-            "id": 12,
-            "question": "Who invented Peanut Butter?"
-        },
-        {
-            "answer": "Lake Victoria",
-            "category": 3,
-            "difficulty": 2,
-            "id": 13,
-            "question": "What is the largest lake in Africa?"
-        },
-        {
-            "answer": "The Palace of Versailles",
-            "category": 3,
-            "difficulty": 3,
-            "id": 14,
-            "question": "In which royal palace would you find the Hall of Mirrors?"
-        }
-    ],
-    "success": true,
-    "total_questions": 19
-}
-```
-
-### POST question `/questions` - create new question
-End point to create a new question by taking the question, answer, category, and difficulty score.
-
-Returns the question created, category, questions total number of questions, and a success value.
-
-Try `curl http://127.0.0.1:5000/questions?page=2 -X POST -H "Content-Type: application/json" -d '{"question":"Who was the first president of Kenya?", "answer":"Jomo Kenyatta", "category":4, "difficulty":1}'`
-
-Response:
-```
-{
-    "category": 4,
-    "question_created": 27,
-    "questions": [
-        {
-            "answer": "Agra",
-            "category": 3,
-            "difficulty": 2,
-            "id": 15,
-            "question": "The Taj Mahal is located in which Indian city?"
-        },
-        {
-            "answer": "Escher",
-            "category": 2,
-            "difficulty": 1,
-            "id": 16,
-            "question": "Which Dutch graphic artist–initials M C was a creator of optical illusions?"
-        },
-        {
-            "answer": "Mona Lisa",
-            "category": 2,
-            "difficulty": 3,
-            "id": 17,
-            "question": "La Giaconda is better known as what?"
-        },
-        {
-            "answer": "One",
-            "category": 2,
-            "difficulty": 4,
-            "id": 18,
-            "question": "How many paintings did Van Gogh sell in his lifetime?"
-        },
-        {
-            "answer": "Jackson Pollock",
-            "category": 2,
-            "difficulty": 2,
-            "id": 19,
-            "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
-        },
-        {
-            "answer": "The Liver",
-            "category": 1,
-            "difficulty": 4,
-            "id": 20,
-            "question": "What is the heaviest organ in the human body?"
-        },
-        {
-            "answer": "Alexander Fleming",
-            "category": 1,
-            "difficulty": 3,
-            "id": 21,
-            "question": "Who discovered penicillin?"
-        },
-        {
-            "answer": "Blood",
-            "category": 1,
-            "difficulty": 4,
-            "id": 22,
-            "question": "Hematology is a branch of medicine involving the study of what?"
-        },
-        {
-            "answer": "Jomo Kenyatta",
-            "category": 4,
-            "difficulty": 1,
-            "id": 27,
-            "question": "Who was the first president of Kenya?"
-        }
-    ],
-    "success": true,
-    "total_questions": 19
-}
-```
-### POST `/questions/` - search questions
-Gets questions that match any part of a search term.
-
-Returns the questions that match, total number of questions that match, and a success value
-
-Try `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"search_term":"who"}'`
-
-Response:
-```
-{
-    "questions": [
-        {
-            "answer": "Maya Angelou",
-            "category": 4,
-            "difficulty": 2,
-            "id": 5,
-            "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
-        },
-        {
-            "answer": "George Washington Carver",
-            "category": 4,
-            "difficulty": 2,
-            "id": 12,
-            "question": "Who invented Peanut Butter?"
-        },
-        {
-            "answer": "Alexander Fleming",
-            "category": 1,
-            "difficulty": 3,
-            "id": 21,
-            "question": "Who discovered penicillin?"
-        },
-        {
-            "answer": "Jomo Kenyatta",
-            "category": 4,
-            "difficulty": 1,
-            "id": 27,
-            "question": "Who was the first president of Kenya?"
-        }
-    ],
-    "success": true,
-    "total_questions": 4
-}
-```
-
-### GET questions `/categories/{category_id}/questions` -by category
-Endpoint to get questions by category.
-
-Returns all questions in the specific category, total questions in that category, the id of the current category, all available categories, and a success value.
+Returns an object with all questions in the specific category, total questions in that category, the string type of the current category, and a success value.
 
 Try `http://127.0.0.1:5000/categories/4/questions` 
 
 Response:
 ```
 {
-    "categories": [
-        {
-            "id": 1,
-            "type": "Science"
-        },
-        {
-            "id": 2,
-            "type": "Art"
-        },
-        {
-            "id": 3,
-            "type": "Geography"
-        },
-        {
-            "id": 4,
-            "type": "History"
-        },
-        {
-            "id": 5,
-            "type": "Entertainment"
-        },
-        {
-            "id": 6,
-            "type": "Sports"
-        }
-    ],
-    "current_category": 4,
+    "currentCategory": "History",
     "questions": [
         {
             "answer": "Maya Angelou",
@@ -471,21 +202,137 @@ Response:
         }
     ],
     "success": true,
-    "total_questions": 4
+    "totalQuestions": 4
 }
 ```
 
-### POST play `'/play'` - play the quiz game
+### DELETE question `/questions/${question_id}`
+Endpoint to delete a question using the id of the question.
+
+Takes the question id (integer) as an argument.
+
+Returns the id of the deleted question, total number of questions, and a success value.
+
+Try `curl http://127.0.0.1:5000/questions/25`
+
+Response:
+```
+{
+    "question_deleted": 27,
+    "success": true,
+    "totalQuestions": 18
+}
+```
+
+### POST question `/questions` - create new question
+End point to add a new question by taking the question, answer, category, and difficulty score.
+
+Request body example:
+```
+{
+    "question": "Who was the first president of Kenya?",
+    "answer": "Jomo Kenyatta",
+    "category": 4,
+    "difficulty": 1
+}
+```
+
+Returns the id of the question created, total number of questions, and a success value.
+
+Try `curl http://127.0.0.1:5000/questions?page=2 -X POST -H "Content-Type: application/json" -d '{"question":"Who was the first president of Kenya?", "answer":"Jomo Kenyatta", "category":4, "difficulty":1}'`
+
+Response:
+```
+{
+    "question_created": 29,
+    "success": true,
+    "totalQuestions": 20
+}
+```
+
+### POST `/questions/` - search questions
+Searches for specific question(s) by search term.
+
+Takes the search term in the request body.
+
+Request body example:
+```
+{
+    "searchTerm": "who"
+}
+```
+
+Returns the questions that match the search term, total number of questions that match, the current category string type, and a success value
+
+Try `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm":"who"}'`
+
+Response:
+```
+{
+    "currentCategory": "History",
+    "questions": [
+        {
+            "answer": "Maya Angelou",
+            "category": 4,
+            "difficulty": 2,
+            "id": 5,
+            "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+        },
+        {
+            "answer": "George Washington Carver",
+            "category": 4,
+            "difficulty": 2,
+            "id": 12,
+            "question": "Who invented Peanut Butter?"
+        },
+        {
+            "answer": "Alexander Fleming",
+            "category": 1,
+            "difficulty": 3,
+            "id": 21,
+            "question": "Who discovered penicillin?"
+        },
+        {
+            "answer": "Jomo Kenyatta",
+            "category": 4,
+            "difficulty": 1,
+            "id": 28,
+            "question": "Who was the first president of Kenya?"
+        },
+        {
+            "answer": "Jomo Kenyatta",
+            "category": 4,
+            "difficulty": 1,
+            "id": 29,
+            "question": "Who was the first president of Kenya?"
+        }
+    ],
+    "success": true,
+    "totalQuestions": 5
+}
+```
+
+
+
+### POST quizzes `'/quizzes'` - play the quiz game
 Endpoint to get the next question to play.
 
-Returns a random question in the current category, total questions available to play, the current category_id, and a success value.
+Request bosy takes the previous questions which is an array of id's and quiz category which is a string of teh current category.
+```
+{
+  'previous_questions': [12, 24, 9, 23]
+  'quiz_category': 'History'
+}
+```
+
+Returns a single random question in the current category, total questions available to play, the current category string type, and a success value.
 
 Try `'curl http://127.0.0.1:5000/play'`
 
 Response:
 ```
 {
-    "current_category": 4,
+    "currentCategory": 4,
     "question": {
         "answer": "Muhammad Ali",
         "category": 4,
@@ -494,7 +341,7 @@ Response:
         "question": "What boxer's original name is Cassius Clay?"
     },
     "success": true,
-    "total_questions": 4
+    "totalQuestions": 4
 }
 ```
 
