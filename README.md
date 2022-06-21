@@ -1,3 +1,82 @@
+# Project Documentation
+## Introduction
+The trivia_app API is a web application that allows player(s) to play a quiz game with questions that are randomly generated.
+
+The app is able to:
+1. Display questions - all available questions and questions by category.
+2. Search questions
+3. Create new questions
+4. Delete a question
+5. Play the trivia quiz while randomizing either all questions or questions in a specific category.
+
+The app is built with a react frontend and a flask backend.
+
+## Starting the project
+
+## Setting up the Backend
+### Installing Dependancies for the Backend
+1. Install the **latest version of python** [python installation](https://www.python.org/downloads/)
+
+2. Set up your **virtual environment**. Keep your dependencies seperate and organized using a virtual environment. [Installing using pip and setting up a virtual environment.](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/)
+
+3. **Install dependencies** using pip. Install the dependencies by navigating to the backend folder and running:
+```
+pip install -r requirements.txt
+```
+This will install all the required packages for the project.
+
+### Setting up the database
+Have your postgres running and create a new database called trivia and another called trivia_test.
+Use the trivia.psql file to populate both databases using the following commands in your terminal:
+```
+\i trivia.psql
+```
+Note: Make sure to edit the psql file with the right username as the owner.
+
+### Running the backend server
+Start the virtual environment and run the backend server
+```
+env\Scripts\activate 
+set FLASK_APP=flaskr
+set FLASK_ENV=development
+flask run
+```
+### Testing
+To run tests 
+```
+dropdb trivia_test
+createdb trivia_test
+\i trivia.psql
+
+python test_flaskr.py
+```
+
+## Setting up the frontend
+### Note:
+The frontend is designed to work with a flask-based backend. Before, setting up frontend, ensure the backend is set up and test with curl or postman, so that the frontend integrates smoothly.
+
+### Installing Dependancies for Frontend
+1. The app depends on **Nodejs and Node Package Manager (NPM)**. Download and install Node (which includes NPM).
+   [Node Download](https://nodejs.org/en/download/).
+
+2. **Install project dependencies**
+
+The project uses NPM to manage software dependencies. NPM relies on the package.json file located in the  `frontend` directory.
+
+Navigate to the frontend directory in your terminal and run:
+```
+npm install
+```
+
+### Starting the frontend server
+Start the frontend server in development mode.
+```
+npm start
+```
+View the app in browser using [http://localhost:3000](http://localhost:3000). The page will reload when you make edits.
+
+
+
 # API Documentation
 ## Introduction
 The trivia_app API is an application that allows a player to play a trivia quiz game with questions that are randomly generated.
@@ -250,7 +329,7 @@ Response:
 }
 ```
 
-### POST `/questions/` - search questions
+### POST `/questions/search` - search questions
 Searches for specific question(s) by search term.
 
 Takes the search term in the request body.
