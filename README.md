@@ -93,6 +93,7 @@ The trivia app currently does not use API Keys or any authentication method
 ## Error Handling
 Trivia API handles the following errors if a request fails:
 - 404: resource not found
+- 405: method not allowed
 - 422: unprocessable
 - 400: bad request
 - 500: internal server error
@@ -117,9 +118,10 @@ Try `curl http://127.0.0.1:5000/questions?page=2`
 ### GET Categories `/categories`
 End point to get a list of all categories.
 
-Returns all categories as a dictionary with category id as key and string type as value, total number of categories and a success value.
-
+Request arguments: 
 Takes no request arguments.
+
+Returns: all categories as a dictionary with category id as key and string type as value, total number of categories and a success value.
 
 Try `curl http://127.0.0.1:5000/categories`
 
@@ -142,9 +144,10 @@ Reponse:
 ### GET Questions `/questions?page=${integer}`
 End point to get all questions in a given page.
 
+Request argument: 
 Takes a page request argument to get a specific page. `?page=${integer}`
 
-Returns questions (10 questions for a page), total number of questions, all categories as a dictionary, the current category, and a success value
+Returns: questions (10 questions for a page), total number of questions, all categories as a dictionary, the current category, and a success value
 
 Try `curl http://127.0.0.1:5000/questions?page=1`
 
@@ -240,9 +243,10 @@ Response:
 ### GET questions `/categories/${category_id}/questions` -by category
 Endpoint to get questions by category using the category id.
 
+Request aeguments:
 Takes in the id (integer) of the category as an argument.
 
-Returns an object with all questions in the specific category, total questions in that category, the string type of the current category, and a success value.
+Returns: an object with all questions in the specific category, total questions in that category, the string type of the current category, and a success value.
 
 Try `http://127.0.0.1:5000/categories/4/questions` 
 
@@ -288,11 +292,12 @@ Response:
 ### DELETE question `/questions/${question_id}`
 Endpoint to delete a question using the id of the question.
 
+Request argument: 
 Takes the question id (integer) as an argument.
 
-Returns the id of the deleted question, total number of questions, and a success value.
+Returns: the id of the deleted question, total number of questions, and a success value.
 
-Try `curl http://127.0.0.1:5000/questions/25`
+Try `curl http://127.0.0.1:5000/questions/27`
 
 Response:
 ```
@@ -316,7 +321,7 @@ Request body example:
 }
 ```
 
-Returns the id of the question created, total number of questions, and a success value.
+Returns: the id of the question created, total number of questions, and a success value.
 
 Try `curl http://127.0.0.1:5000/questions?page=2 -X POST -H "Content-Type: application/json" -d '{"question":"Who was the first president of Kenya?", "answer":"Jomo Kenyatta", "category":4, "difficulty":1}'`
 
@@ -332,6 +337,7 @@ Response:
 ### POST `/questions/search` - search questions
 Searches for specific question(s) by search term.
 
+Request argument:
 Takes the search term in the request body.
 
 Request body example:
@@ -341,7 +347,7 @@ Request body example:
 }
 ```
 
-Returns the questions that match the search term, total number of questions that match, the current category string type, and a success value
+Returns: the questions that match the search term, total number of questions that match, the current category string type, and a success value
 
 Try `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"searchTerm":"who"}'`
 
@@ -379,11 +385,11 @@ Response:
             "question": "Who was the first president of Kenya?"
         },
         {
-            "answer": "Jomo Kenyatta",
+            "answer": "Moi",
             "category": 4,
             "difficulty": 1,
             "id": 29,
-            "question": "Who was the first president of Kenya?"
+            "question": "Who was the second president of Kenya?"
         }
     ],
     "success": true,
@@ -396,31 +402,29 @@ Response:
 ### POST quizzes `'/quizzes'` - play the quiz game
 Endpoint to get the next question to play.
 
-Request bosy takes the previous questions which is an array of id's and quiz category which is a string of teh current category.
+Request body takes the previous questions which is an array of id's and quiz category which is a dict object of the current category.
 ```
 {
-  'previous_questions': [12, 24, 9, 23]
-  'quiz_category': 'History'
+    "previous_questions": [22, 20],
+    "quiz_category":{"id": 1, "type": "Science"}
 }
 ```
 
-Returns a single random question in the current category, total questions available to play, the current category string type, and a success value.
+Returns: a single random question and a success value.
 
-Try `'curl http://127.0.0.1:5000/play'`
+Try `'curl http://127.0.0.1:5000/quizzes'`
 
 Response:
 ```
 {
-    "currentCategory": 4,
     "question": {
-        "answer": "Muhammad Ali",
-        "category": 4,
-        "difficulty": 1,
-        "id": 9,
-        "question": "What boxer's original name is Cassius Clay?"
+        "answer": "Alexander Fleming",
+        "category": 1,
+        "difficulty": 3,
+        "id": 21,
+        "question": "Who discovered penicillin?"
     },
-    "success": true,
-    "totalQuestions": 4
+    "success": true
 }
 ```
 
