@@ -137,7 +137,7 @@ Reponse:
         "6": "Sports"
     },
     "success": true,
-    "totalCategories": 6
+    "total_categories": 6
 }
 ```
 
@@ -162,7 +162,7 @@ Response:
         "5": "Entertainment",
         "6": "Sports"
     },
-    "currentCategory": "Entertainment",
+    "current_category": "Entertainment",
     "questions": [
         {
             "answer": "Apollo 13",
@@ -236,14 +236,14 @@ Response:
         }
     ],
     "success": true,
-    "totalQuestions": 21
+    "total_questions": 21
 }
 ```
 
 ### GET questions `/categories/${category_id}/questions` -by category
 Endpoint to get questions by category using the category id.
 
-Request aeguments:
+Request arguments:
 Takes in the id (integer) of the category as an argument.
 
 Returns: an object with all questions in the specific category, total questions in that category, the string type of the current category, and a success value.
@@ -253,7 +253,7 @@ Try `http://127.0.0.1:5000/categories/4/questions`
 Response:
 ```
 {
-    "currentCategory": "History",
+    "current_category": "History",
     "questions": [
         {
             "answer": "Maya Angelou",
@@ -285,7 +285,7 @@ Response:
         }
     ],
     "success": true,
-    "totalQuestions": 4
+    "total_questions": 4
 }
 ```
 
@@ -304,7 +304,7 @@ Response:
 {
     "question_deleted": 27,
     "success": true,
-    "totalQuestions": 18
+    "total_questions": 18
 }
 ```
 
@@ -330,7 +330,7 @@ Response:
 {
     "question_created": 29,
     "success": true,
-    "totalQuestions": 20
+    "total_questions": 20
 }
 ```
 
@@ -354,7 +354,7 @@ Try `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/
 Response:
 ```
 {
-    "currentCategory": "History",
+    "current_category": "History",
     "questions": [
         {
             "answer": "Maya Angelou",
@@ -393,7 +393,7 @@ Response:
         }
     ],
     "success": true,
-    "totalQuestions": 5
+    "total_questions": 5
 }
 ```
 
